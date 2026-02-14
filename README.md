@@ -21,7 +21,7 @@ I haven't locked in the final tools yet because I want to see what works best! I
 
 ## 📂 Project Assets
 Want to see the deep dive? 
-* [Check out the Full Project Plan (PDF)](./your-plan-file-name-here.pdf) 📄
+* [Check out the Full Project Plan (PDF)](./Lab%20Results%20&%20Diagnostic%20Report%20IVR.pdf) 📄
 * This project is licensed under the **MIT License**.
 
 ---
