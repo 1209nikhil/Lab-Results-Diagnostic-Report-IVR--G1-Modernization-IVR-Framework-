@@ -17,7 +17,7 @@ new_data = [
         "summary": "Your recent physical shows excellent health, but elevated fatigue levels. The doctor recommends more sleep and fewer night shifts.",
         "doctor_notes": "Patient is in peak physical condition but stressed.",
         "phone_number": MY_PHONE_NUMBER,
-        "email": "alienfall.apocalypse@gmail.com"
+        "email": "ninne12905@gmail.com"
         
     },
     {
@@ -27,7 +27,7 @@ new_data = [
         "summary": "Your eye exam and vitals are perfectly normal. No signs of Kryptonite exposure detected.",
         "doctor_notes": "Unusually dense bone structure noted.",
         "phone_number": MY_PHONE_NUMBER,
-        "email": "clark.kent@dailyplanet.com"
+        "email": "nikhil12905@gmail.com"
     }
 ]
 

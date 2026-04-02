@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="17" time="2.168" timestamp="2026-03-28T22:17:23.369850+05:30" hostname="NIK"><testcase classname="test_ivr" name="test_voice_language_selection_unit" time="0.026"><failure message="assert '2 dabayen' in 'Welcome to the Lab Results system. Press 1 for English.'&#10; +  where 'Welcome to the Lab Results system. Press 1 for English.' = &lt;Say voice=&quot;Polly.Aditi&quot;&gt;Welcome to the Lab Results system. Press 1 for English.&lt;/Say&gt;.text">def test_voice_language_selection_unit():
+        """
+        B1 — Unit Test: /voice now returns a language-selection Gather,
+        not the old direct main menu. Verify it has a DTMF Gather pointing
+        to /set-language and a &lt;Say&gt; prompting for English or Hindi.
+        """
+        response = client.post("/voice", data={"CallSid": "unit_voice_001"})
+    
+        assert response.status_code == 200
+        assert "application/xml" in response.headers["content-type"]
+    
+        twiml = parse_twiml(response.text)
+        gather = twiml.find("Gather")
+        assert gather is not None
+        assert "/set-language" in gather["action"]
+        assert gather["input"] == "dtmf"
+    
+        say = gather.find("Say")
+        assert say is not None
+        assert "English" in say.text
+&gt;       assert "2 dabayen" in say.text  # Hindi prompt present
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert '2 dabayen' in 'Welcome to the Lab Results system. Press 1 for English.'
+E        +  where 'Welcome to the Lab Results system. Press 1 for English.' = &lt;Say voice="Polly.Aditi"&gt;Welcome to the Lab Results system. Press 1 for English.&lt;/Say&gt;.text
+
+test_ivr.py:58: AssertionError</failure></testcase><testcase classname="test_ivr" name="test_main_menu_english_unit" time="0.007" /><testcase classname="test_ivr" name="test_main_menu_hindi_unit" time="0.007" /><testcase classname="test_ivr" name="test_pii_mask_patient_id" time="0.001" /><testcase classname="test_ivr" name="test_pii_mask_phone" time="0.001" /><testcase classname="test_ivr" name="test_twilio_validation_disabled_by_default" time="0.007" /><testcase classname="test_ivr" name="test_twilio_validation_blocks_forged_requests" time="0.005" /><testcase classname="test_ivr" name="test_set_language_english" time="0.005" /><testcase classname="test_ivr" name="test_set_language_hindi" time="0.005" /><testcase classname="test_ivr" name="test_set_language_default_english" time="0.005" /><testcase classname="test_ivr" name="test_call_status_cleanup_on_completed" time="0.004" /><testcase classname="test_ivr" name="test_call_status_cleanup_on_failed" time="0.006" /><testcase classname="test_ivr" name="test_call_status_no_crash_for_unknown_sid" time="0.005" /><testcase classname="test_ivr" name="test_call_status_ignores_intermediate_states" time="0.004" /><testcase classname="test_ivr" name="test_full_integration_flow_with_language" time="0.170" /><testcase classname="test_ivr" name="test_e2e_invalid_patient_id" time="0.011"><failure message="AssertionError: assert 'did not receive a valid input' in 'We could not find a match for that Patient I D. Please try saying your name or your five digit Patient I D again.'">def test_e2e_invalid_patient_id():
+        """
+        B3 — E2E Test: Unknown patient name triggers a re-prompt,
+        not a crash or unhandled error.
+        """
+        call_sid = "e2e_call_sid_789"
+    
+        res = client.post("/verify-patient", data={
+            "CallSid": call_sid,
+            "SpeechResult": "My name is Peter Parker"
+        })
+    
+        twiml = parse_twiml(res.text)
+        say = twiml.find("Say").text
+&gt;       assert "did not receive a valid input" in say
+E       AssertionError: assert 'did not receive a valid input' in 'We could not find a match for that Patient I D. Please try saying your name or your five digit Patient I D again.'
+
+test_ivr.py:298: AssertionError</failure></testcase><testcase classname="test_ivr" name="test_e2e_full_session_lifecycle" time="0.028" /></testsuite></testsuites>

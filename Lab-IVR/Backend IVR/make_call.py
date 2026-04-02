@@ -31,5 +31,11 @@ client = Client(account_sid, auth_token)
 
 base_url = base_url.rstrip("/")
 print(f"Initiating call to {to_phone}...")
-call = client.calls.create(to=to_phone, from_=twilio_phone, url=f"{base_url}/voice")
+call = client.calls.create(
+    to=to_phone,
+    from_=twilio_phone,
+    url=f"{base_url}/voice",
+    status_callback=f"{base_url}/call-status",
+    status_callback_method="POST"
+)
 print(f"Call initiated successfully. SID: {call.sid}")

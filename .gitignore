@@ -9,5 +9,8 @@ node_modules/
 *.temp
 *.pdf
 *.md
+look.md
 *.mv
 LICENSE
+*.txt
+Doc
